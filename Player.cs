@@ -15,46 +15,28 @@ namespace TextBasedAdventure
         private Weapon[] _weapons = new Weapon[5];
         public int Health
         {
-            get
-            {
-                return _health;
-            }
-            set
-            {
-                _health = value;
-            }
+            get { return _health; }
+            private set { _health = value; }
         }
         public int ArmorThresh
         {
-            get
-            {
-                return _armorthresh;
-            }
-            private set
-            {
-                _armorthresh = value;
-            }
+            get { return _armorthresh; }
+            private set { _armorthresh = value; }
         }
         public string Name
         {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                _name = value;
-            }
+            get { return _name; }
+            private set { _name = value; }
         }
         public int AmountWeapons
         {
             get { return _amtweps; }
-            set { _amtweps += value; }
+            private set { _amtweps = value; }
         }
         public bool IsStunned
         {
             get { return _isstunned; }
-            private set { _isstunned = value; }
+            internal set { _isstunned = value; }
         }
         public Weapon[] Weapons
         {

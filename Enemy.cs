@@ -41,7 +41,7 @@ namespace TextBasedAdventure
         public bool IsStunned
         {
             get { return _isstunned; }
-            private set { _isstunned = value; }
+            internal set { _isstunned = value; }
         }
         public Weapon Weapon
         {

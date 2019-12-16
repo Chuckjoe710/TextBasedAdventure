@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TextBasedAdventure
 {
-    public class ShortSword : Weapon
+    class ShortSword : Weapon
     {
         public ShortSword(double y)
         {

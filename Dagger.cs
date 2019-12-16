@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TextBasedAdventure
 {
-    public class Dagger : Weapon
+    class Dagger : Weapon
     {
         public Dagger(double y)
         {

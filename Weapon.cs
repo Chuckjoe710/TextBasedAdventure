@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TextBasedAdventure
 {
-    public class Weapon
+     class Weapon
     {
         #region fields
         private int _damage;
@@ -26,7 +26,7 @@ namespace TextBasedAdventure
         public int Durability
         {
             get { return _durability; }
-            protected set { _durability = value; }
+            set { _durability = value; }
         }
         public string Name
         {
@@ -36,7 +36,7 @@ namespace TextBasedAdventure
         public int Amount
         {
             get { return _amount; }
-            protected set { _amount = value; }
+            set { _amount = value; }
         }
         public int Speed
         {

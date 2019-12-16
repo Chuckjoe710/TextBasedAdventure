@@ -16,5 +16,6 @@ namespace TextBasedAdventure
             Speed = random.Next(8, 12);
             Amount = 1;
         }
+        public void BasicAttack
     }
 }
