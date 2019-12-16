@@ -11,7 +11,8 @@ namespace TextBasedAdventure
         private int _numberofarms;
         private int _numberoflegs;
         private string _name;
-        private Weapon weapon;
+        private bool _isstunned;
+        private Weapon _weapon;
         public int Health
         {
             get { return _health; }
@@ -35,7 +36,17 @@ namespace TextBasedAdventure
         public string Name
         {
             get { return _name; }
-            private set { _name = value; }
+            private set { _name = value; } 
+        }
+        public bool IsStunned
+        {
+            get { return _isstunned; }
+            private set { _isstunned = value; }
+        }
+        public Weapon Weapon
+        {
+            get { return _weapon; }
+            private set { _weapon = value; }
         }
         public Enemy(int hp, int at, int noa, int nol, string nme)
         {
@@ -45,13 +56,21 @@ namespace TextBasedAdventure
             NumberofLegs = nol;
             Name = nme;
         }
-        public void Attack(Player player, int dam, int amt)
+        public virtual void Attack(Player player, int dam, int amt)
         {
-            player.TakeDamage(dam * amt);
+            player.TakeDamage(dam, amt);
         }
-        public void EquipWeapon(Weapon stabby)
+        public virtual void EquipWeapon(Weapon stabby)
         {
-            weapon = stabby;
+            Weapon = stabby;
+        }
+        public virtual void TakeDamage(int damage, int amt)
+        {
+            int realdam;
+            realdam = amt * (damage - ArmorThresh);
+            if (realdam <= 0)
+                realdam = 1;
+            Health = Health - realdam;
         }
     }
 }
