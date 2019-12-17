@@ -178,7 +178,10 @@ namespace TextBasedAdventure
                                         if (enemies[j].IsDead == false)
                                         {
                                             enemies[j].Attack(player, enemies[j].Weapon.Damage, enemies[j].Weapon.Amount);
-                                            Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemies[j].Name, (enemies[j].Weapon.Amount * (enemies[j].Weapon.Damage - player.ArmorThresh)), player.Health);
+                                            if (enemies[j].Weapon.Damage - player.ArmorThresh > 0)
+                                                Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemies[j].Name, (enemies[j].Weapon.Amount * (enemies[j].Weapon.Damage - player.ArmorThresh)), player.Health);
+                                            else
+                                                Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemies[j].Name, player.Health);
                                         }
                                     }
                                 }
@@ -230,6 +233,10 @@ namespace TextBasedAdventure
                                         if (enemies[j].IsDead == false)
                                         {
                                             enemies[j].Attack(player, enemies[j].Weapon.Damage, enemies[j].Weapon.Amount);
+                                            if (enemies[j].Weapon.Damage - player.ArmorThresh > 0)
+                                                Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemies[j].Name, (enemies[j].Weapon.Amount * (enemies[j].Weapon.Damage - player.ArmorThresh)), player.Health);
+                                            else
+                                                Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemies[j].Name, player.Health);
                                         }
                                     }
                                 }
@@ -241,6 +248,10 @@ namespace TextBasedAdventure
                                     if (enemies[j].IsDead == false)
                                     {
                                         enemies[j].Attack(player, enemies[j].Weapon.Damage, enemies[j].Weapon.Amount);
+                                        if (enemies[j].Weapon.Damage - player.ArmorThresh > 0)
+                                            Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemies[j].Name, (enemies[j].Weapon.Amount * (enemies[j].Weapon.Damage - player.ArmorThresh)), player.Health);
+                                        else
+                                            Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemies[j].Name, player.Health);
                                     }
                                 }
 

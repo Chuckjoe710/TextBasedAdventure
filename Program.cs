@@ -48,6 +48,7 @@ namespace TextBasedAdventure
                     {
                         Charles.Weapons[i].Durability += 20;
                     }
+                    Console.ReadKey();
                 }
                 else if(k == 11)
                 {
