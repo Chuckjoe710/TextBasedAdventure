@@ -16,12 +16,12 @@ namespace TextBasedAdventure
         public int Health
         {
             get { return _health; }
-            private set { _health = value; }
+            internal set { _health = value; }
         }
         public int ArmorThresh
         {
             get { return _armorthresh; }
-            private set { _armorthresh = value; }
+            internal set { _armorthresh = value; }
         }
         public string Name
         {
@@ -41,6 +41,7 @@ namespace TextBasedAdventure
         public Weapon[] Weapons
         {
             get { return _weapons; }
+            private set { _weapons = value; }
         }
         #endregion
         #region constructor
@@ -68,7 +69,7 @@ namespace TextBasedAdventure
                 {
                     Console.WriteLine("{0}. {1}", k+1, _weapons[k]);
                 }
-                int x = Convert.ToInt32(Console.ReadKey());
+                int x = Convert.ToInt32(Console.ReadLine());
                 if(x == 1)
                 {
                     _weapons[0] = weapon;
@@ -93,8 +94,8 @@ namespace TextBasedAdventure
             else
             {
                 int x = AmountWeapons;
-                _weapons[x] = weapon;
-                AmountWeapons += 1;
+                Weapons[x] = weapon;
+                AmountWeapons++;
             }
         }
         public void Attack(Enemy enemy, int dam, int amt)

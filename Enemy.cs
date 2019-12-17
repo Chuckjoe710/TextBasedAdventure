@@ -11,66 +11,92 @@ namespace TextBasedAdventure
         private int _numberofarms;
         private int _numberoflegs;
         private string _name;
-        private bool _isstunned;
-        private Weapon _weapon;
+        private bool _isstunned = false;
+        private bool _isdead = false;
+        private Weapon _weapon = new Weapon();
         public int Health
         {
             get { return _health; }
-            private set { _health = value; }
+            protected set { _health = value; }
         }
         public int ArmorThresh
         {
             get { return _armorthresh; }
-            private set { _armorthresh = value; }
+            protected set { _armorthresh = value; }
         }
         public int NumberOfArms
         {
             get { return _numberofarms; }
-            private set { _numberofarms = value; }
+            protected set { _numberofarms = value; }
         }
-        public int NumberofLegs
+        public int NumberOfLegs
         {
             get { return _numberoflegs; }
-            private set { _numberoflegs = value; }
+            protected set { _numberoflegs = value; }
         }
         public string Name
         {
             get { return _name; }
-            private set { _name = value; } 
+            protected set { _name = value; } 
         }
         public bool IsStunned
         {
             get { return _isstunned; }
             internal set { _isstunned = value; }
         }
+        public bool IsDead
+        {
+            get { return _isdead; }
+            internal set { _isdead = value; }
+        }
         public Weapon Weapon
         {
             get { return _weapon; }
-            private set { _weapon = value; }
+            protected set { _weapon = value; }
         }
         public Enemy(int hp, int at, int noa, int nol, string nme)
         {
             Health = hp;
             ArmorThresh = at;
             NumberOfArms = noa;
-            NumberofLegs = nol;
+            NumberOfLegs = nol;
             Name = nme;
         }
-        public virtual void Attack(Player player, int dam, int amt)
+        public Enemy()
+        {
+        }
+        public void Attack(Player player, int dam, int amt)
         {
             player.TakeDamage(dam, amt);
         }
-        public virtual void EquipWeapon(Weapon stabby)
-        {
-            Weapon = stabby;
-        }
-        public virtual void TakeDamage(int damage, int amt)
+        public void TakeDamage(int damage, int amt)
         {
             int realdam;
             realdam = amt * (damage - ArmorThresh);
             if (realdam <= 0)
                 realdam = 1;
-            Health = Health - realdam;
+            Health -= realdam;
+        }
+        public void Die()
+        {
+            Name += "[IsDead]";
+            IsDead = true;
+        }
+        public static Enemy GenerateEnemy()
+        {
+            int x = Globals.random.Next(1, 3);
+            if(x == 1)
+            {
+                return new Humanoid();
+            }
+            else if(x == 2)
+            {
+                return new Animal();
+            }
+            else
+            {
+                return new Plant();
+            }
         }
     }
 }

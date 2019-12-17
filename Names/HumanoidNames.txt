@@ -1,0 +1,8 @@
+﻿Bandit
+Marauder
+Raider
+Savage
+Brute
+Savage
+Scoundrel
+Psyco
