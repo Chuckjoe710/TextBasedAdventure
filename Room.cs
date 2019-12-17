@@ -6,6 +6,7 @@ namespace TextBasedAdventure
 {
     class Room
     {
+        #region Constructor/Helper
         public Room(Player player, int choice)
         {
             if (choice == 1)
@@ -48,6 +49,7 @@ namespace TextBasedAdventure
                 }
             }
         }
+        #endregion
         public void SpecialRoom(Player player, Mythical enemy)
         {
             int k, wepIndex, specialAttk;
@@ -80,11 +82,19 @@ namespace TextBasedAdventure
                             if (enemy.Health > 0)
                             {
                                 enemy.Attack(player, enemy.Special.Damage, enemy.Special.Amount);
+                                if (enemy.Special.Damage - player.ArmorThresh > 0)
+                                    Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemy.Name, (enemy.Special.Amount * (enemy.Special.Damage - player.ArmorThresh)), player.Health);
+                                else
+                                    Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemy.Name, player.Health);
                             }
                         }
                         else
                         {
                             enemy.Attack(player, enemy.Special.Damage, enemy.Special.Amount);
+                            if (enemy.Special.Damage - player.ArmorThresh > 0)
+                                Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemy.Name, (enemy.Special.Amount * (enemy.Special.Damage - player.ArmorThresh)), player.Health);
+                            else
+                                Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemy.Name, player.Health);
                             if (player.Health > 0)
                             {
                                 player.Weapons[wepIndex].SpecialAttack(player, enemy);
@@ -99,11 +109,19 @@ namespace TextBasedAdventure
                             if (enemy.Health > 0)
                             {
                                 enemy.Attack(player, enemy.Special.Damage, enemy.Special.Amount);
+                                if (enemy.Special.Damage - player.ArmorThresh > 0)
+                                    Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemy.Name, (enemy.Special.Amount * (enemy.Special.Damage - player.ArmorThresh)), player.Health);
+                                else
+                                    Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemy.Name, player.Health);
                             }
                         }
                         else
                         {
                             enemy.Attack(player, enemy.Special.Damage, enemy.Special.Amount);
+                            if (enemy.Special.Damage - player.ArmorThresh > 0)
+                                Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemy.Name, (enemy.Special.Amount * (enemy.Special.Damage - player.ArmorThresh)), player.Health);
+                            else
+                                Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemy.Name, player.Health);
                             if (player.Health > 0)
                             {
                                 player.Weapons[wepIndex].BasicAttack(player, enemy);
@@ -274,7 +292,7 @@ namespace TextBasedAdventure
                     }
                 }
             }
-            Console.WriteLine("You slew everything in the room YOUR AMAZING GAURDI... wrong game gratz");
+            Console.WriteLine("You slew everything in the room YOUR AMAZING GAURDI... wrong game");
         }
     }
 }

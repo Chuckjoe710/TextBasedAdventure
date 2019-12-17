@@ -36,7 +36,7 @@ namespace TextBasedAdventure
                     break;
             }
             Console.WriteLine("You set out on your quest and open the first door");
-            for(int k = 0; k < 21; k++)
+            for(int k = 1; k < 21; k++)
             {
                 if(k == 5 || k == 10 || k == 15 || k == 20)
                 {
@@ -62,8 +62,13 @@ namespace TextBasedAdventure
                 {
                     new Room(Charles, 1);
                 }
+                if(Charles.Health <= 0)
+                {
+                    Console.WriteLine("You Died");
+                }
             }
-            Console.WriteLine("You Win... that wasn't supposed to happen.");
+            if(Charles.Health > 0)
+                Console.WriteLine("You Win... that wasn't supposed to happen.");
             Console.ReadKey();
         }
     }
