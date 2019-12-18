@@ -53,6 +53,7 @@ namespace TextBasedAdventure
         public void SpecialRoom(Player player, Mythical enemy)
         {
             int k, wepIndex, specialAttk;
+            string temp;
             Console.WriteLine("This room seems different, but by now you know the drill and figure that you should prepare to fight.");
             Console.WriteLine("You recognize your mistake the second that the {0} appears", enemy.Name);
             while (player.Health > 0 && enemy.Health > 0)
@@ -62,78 +63,98 @@ namespace TextBasedAdventure
                 {
                     Console.WriteLine("{0}. {1}", k + 1, player.Weapons[k].Name);
                 }
-                wepIndex = Convert.ToInt32(Console.ReadLine());
-                wepIndex--;
-                if (wepIndex >= k || wepIndex < 0)
+                temp = Console.ReadLine();
+                if (temp[0] >= '0' && temp[0] <= '9')
                 {
-                    Console.WriteLine("Invalid Weapon");
+                    wepIndex = temp[0] - '0';
+                    wepIndex--;
+                    if (wepIndex >= k || wepIndex < 0)
+                    {
+                        Console.WriteLine("Invalid Weapon");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Would you like to special attack with your weapon?");
+                        Console.WriteLine("1. Yes");
+                        Console.WriteLine("2. No");
+                        temp = Console.ReadLine();
+                        if (temp[0] >= '0' && temp[0] <= '9')
+                        {
+                            specialAttk = temp[0] - '0';
+                            if (specialAttk == 1)
+                            {
+                                if (player.Weapons[wepIndex].Speed > enemy.Weapon.Speed)
+                                {
+                                    player.Weapons[wepIndex].SpecialAttack(player, enemy);
+                                    if (enemy.Health > 0)
+                                    {
+                                        enemy.Attack(player, enemy.Special.Damage, enemy.Special.Amount);
+                                        if (enemy.Special.Damage - player.ArmorThresh > 0)
+                                            Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemy.Name, (enemy.Special.Amount * (enemy.Special.Damage - player.ArmorThresh)), player.Health);
+                                        else
+                                            Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemy.Name, player.Health);
+                                    }
+                                }
+                                else
+                                {
+                                    enemy.Attack(player, enemy.Special.Damage, enemy.Special.Amount);
+                                    if (enemy.Special.Damage - player.ArmorThresh > 0)
+                                        Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemy.Name, (enemy.Special.Amount * (enemy.Special.Damage - player.ArmorThresh)), player.Health);
+                                    else
+                                        Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemy.Name, player.Health);
+                                    if (player.Health > 0)
+                                    {
+                                        player.Weapons[wepIndex].SpecialAttack(player, enemy);
+                                    }
+                                }
+                            }
+                            else if (specialAttk == 2)
+                            {
+                                if (player.Weapons[wepIndex].Speed > enemy.Weapon.Speed)
+                                {
+                                    player.Weapons[wepIndex].BasicAttack(player, enemy);
+                                    if (enemy.Health > 0)
+                                    {
+                                        enemy.Attack(player, enemy.Special.Damage, enemy.Special.Amount);
+                                        if (enemy.Special.Damage - player.ArmorThresh > 0)
+                                            Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemy.Name, (enemy.Special.Amount * (enemy.Special.Damage - player.ArmorThresh)), player.Health);
+                                        else
+                                            Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemy.Name, player.Health);
+                                    }
+                                }
+                                else
+                                {
+                                    enemy.Attack(player, enemy.Special.Damage, enemy.Special.Amount);
+                                    if (enemy.Special.Damage - player.ArmorThresh > 0)
+                                        Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemy.Name, (enemy.Special.Amount * (enemy.Special.Damage - player.ArmorThresh)), player.Health);
+                                    else
+                                        Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemy.Name, player.Health);
+                                    if (player.Health > 0)
+                                    {
+                                        player.Weapons[wepIndex].BasicAttack(player, enemy);
+                                    }
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input");
+                        }
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Would you like to special attack with your weapon?");
-                    Console.WriteLine("1. Yes");
-                    Console.WriteLine("2. No");
-                    specialAttk = Convert.ToInt32(Console.ReadLine());
-                    if (specialAttk == 1)
-                    {
-                        if (player.Weapons[wepIndex].Speed > enemy.Weapon.Speed)
-                        {
-                            player.Weapons[wepIndex].SpecialAttack(player, enemy);
-                            if (enemy.Health > 0)
-                            {
-                                enemy.Attack(player, enemy.Special.Damage, enemy.Special.Amount);
-                                if (enemy.Special.Damage - player.ArmorThresh > 0)
-                                    Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemy.Name, (enemy.Special.Amount * (enemy.Special.Damage - player.ArmorThresh)), player.Health);
-                                else
-                                    Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemy.Name, player.Health);
-                            }
-                        }
-                        else
-                        {
-                            enemy.Attack(player, enemy.Special.Damage, enemy.Special.Amount);
-                            if (enemy.Special.Damage - player.ArmorThresh > 0)
-                                Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemy.Name, (enemy.Special.Amount * (enemy.Special.Damage - player.ArmorThresh)), player.Health);
-                            else
-                                Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemy.Name, player.Health);
-                            if (player.Health > 0)
-                            {
-                                player.Weapons[wepIndex].SpecialAttack(player, enemy);
-                            }
-                        }
-                    }
-                    else if (specialAttk == 2)
-                    {
-                        if (player.Weapons[wepIndex].Speed > enemy.Weapon.Speed)
-                        {
-                            player.Weapons[wepIndex].BasicAttack(player, enemy);
-                            if (enemy.Health > 0)
-                            {
-                                enemy.Attack(player, enemy.Special.Damage, enemy.Special.Amount);
-                                if (enemy.Special.Damage - player.ArmorThresh > 0)
-                                    Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemy.Name, (enemy.Special.Amount * (enemy.Special.Damage - player.ArmorThresh)), player.Health);
-                                else
-                                    Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemy.Name, player.Health);
-                            }
-                        }
-                        else
-                        {
-                            enemy.Attack(player, enemy.Special.Damage, enemy.Special.Amount);
-                            if (enemy.Special.Damage - player.ArmorThresh > 0)
-                                Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemy.Name, (enemy.Special.Amount * (enemy.Special.Damage - player.ArmorThresh)), player.Health);
-                            else
-                                Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemy.Name, player.Health);
-                            if (player.Health > 0)
-                            {
-                                player.Weapons[wepIndex].BasicAttack(player, enemy);
-                            }
-                        }
-                    }
+                    Console.WriteLine("Invalid input");
                 }
             }
+            if (player.Health > 0)
+                Console.WriteLine("You slew everything in the room YOUR AMAZING GAURDI... wrong game");
         }
         private void StartEncounter(Player player, int amtEne)
         {
             int k, i, j, totalhealth = 0, wepIndex, eneIndex, specialAttk, prevHealth, postHealth;
+            string temp;
             Enemy[] enemies = new Enemy[amtEne];
             Console.WriteLine("You Enter the room and the door shuts behind you, cliche I know.");
             Console.WriteLine("Soon after {0} shady looking figure(s) enters. You prepare to fight.", amtEne);
@@ -149,150 +170,163 @@ namespace TextBasedAdventure
                 {
                     Console.WriteLine("{0}. {1}", k + 1, player.Weapons[k].Name);
                 }
-                wepIndex = Convert.ToInt32(Console.ReadLine());
-                wepIndex--;
-                if (wepIndex >= k || wepIndex < 0)
+                temp = Console.ReadLine();
+                if (temp[0] >= '0' && temp[0] <= '9')
                 {
-                    Console.WriteLine("Invalid Weapon");
-                }
-                else
-                {
-                    Console.WriteLine("And which enemy shall you attack?");
-                    for (i = 0; i < amtEne; i++)
+                    wepIndex = temp[0] - '0';
+                    wepIndex--;
+                    if (wepIndex >= k || wepIndex < 0)
                     {
-                        if(enemies[i].IsDead == false)
-                            Console.WriteLine("{0}. {1}", i + 1, enemies[i].Name);
-                    }
-                    eneIndex = Convert.ToInt32(Console.ReadLine());
-                    eneIndex--;
-                    if(eneIndex >= i || i < 0 || enemies[eneIndex].IsDead == true)
-                    {
-                        Console.WriteLine("Invalid Enemy");
+                        Console.WriteLine("Invalid Weapon");
                     }
                     else
                     {
-                        Console.WriteLine("Would you like to special attack with your weapon?");
-                        Console.WriteLine("1. Yes");
-                        Console.WriteLine("2. No");
-                        specialAttk = Convert.ToInt32(Console.ReadLine());
-                        if (specialAttk == 1)
+                        Console.WriteLine("And which enemy shall you attack?");
+                        for (i = 0; i < amtEne; i++)
                         {
-                            if (player.Weapons[wepIndex].Speed > enemies[eneIndex].Weapon.Speed)
+                            if (enemies[i].IsDead == false)
+                                Console.WriteLine("{0}. {1}", i + 1, enemies[i].Name);
+                        }
+                        temp = Console.ReadLine();
+                        if (temp[0] >= '0' && temp[0] <= '9')
+                        {
+                            eneIndex = temp[0] - '0';
+                            eneIndex--;
+                            if (eneIndex >= i || i < 0 || enemies[eneIndex].IsDead == true)
                             {
-                                prevHealth = enemies[eneIndex].Health;
-                                player.Weapons[wepIndex].SpecialAttack(player, enemies[eneIndex]);
-                                postHealth = enemies[eneIndex].Health;
-                                if (postHealth < 0)
-                                    postHealth = 0;
-                                totalhealth -= (prevHealth - postHealth);
-                                if (enemies[eneIndex].Health <= 0)
-                                {
-                                    enemies[eneIndex].Die();
-                                }
-                                else
-                                {
-                                    for (j = 0; j < amtEne; j++)
-                                    {
-                                        if (enemies[j].IsDead == false)
-                                        {
-                                            enemies[j].Attack(player, enemies[j].Weapon.Damage, enemies[j].Weapon.Amount);
-                                            if (enemies[j].Weapon.Damage - player.ArmorThresh > 0)
-                                                Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemies[j].Name, (enemies[j].Weapon.Amount * (enemies[j].Weapon.Damage - player.ArmorThresh)), player.Health);
-                                            else
-                                                Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemies[j].Name, player.Health);
-                                        }
-                                    }
-                                }
+                                Console.WriteLine("Invalid Enemy");
                             }
                             else
                             {
-                                for (j = 0; j < amtEne; j++)
+                                Console.WriteLine("Would you like to special attack with your weapon?");
+                                Console.WriteLine("1. Yes");
+                                Console.WriteLine("2. No");
+                                temp = Console.ReadLine();
+                                if (temp[0] >= '0' && temp[0] <= '9')
                                 {
-                                    if (enemies[j].IsDead == false)
+                                    specialAttk = temp[0] - '0';
+                                    if (specialAttk == 1)
                                     {
-                                        enemies[j].Attack(player, enemies[j].Weapon.Damage, enemies[j].Weapon.Amount);
-                                        if (enemies[j].Weapon.Damage - player.ArmorThresh > 0)
-                                            Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemies[j].Name, (enemies[j].Weapon.Amount * (enemies[j].Weapon.Damage - player.ArmorThresh)), player.Health);
-                                        else
-                                            Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemies[j].Name, player.Health);
-                                    }
-                                }
-
-                                prevHealth = enemies[eneIndex].Health;
-                                player.Weapons[wepIndex].SpecialAttack(player, enemies[eneIndex]);
-                                postHealth = enemies[eneIndex].Health;
-                                if (postHealth < 0)
-                                    postHealth = 0;
-                                totalhealth -= (prevHealth - postHealth);
-                                if (enemies[eneIndex].Health <= 0)
-                                {
-                                    enemies[eneIndex].Die();
-                                }
-                            }
-                        }
-                        else if (specialAttk == 2)
-                        {
-                            if (player.Weapons[wepIndex].Speed > enemies[eneIndex].Weapon.Speed)
-                            {
-                                prevHealth = enemies[eneIndex].Health;
-                                player.Weapons[wepIndex].BasicAttack(player, enemies[eneIndex]);
-                                postHealth = enemies[eneIndex].Health;
-                                if (postHealth < 0)
-                                    postHealth = 0;
-                                totalhealth -= (prevHealth - postHealth);
-                                if (enemies[eneIndex].Health <= 0)
-                                {
-                                    enemies[eneIndex].Die();
-                                }
-                                else
-                                {
-                                    for (j = 0; j < amtEne; j++)
-                                    {
-                                        if (enemies[j].IsDead == false)
+                                        if (player.Weapons[wepIndex].Speed > enemies[eneIndex].Weapon.Speed)
                                         {
-                                            enemies[j].Attack(player, enemies[j].Weapon.Damage, enemies[j].Weapon.Amount);
-                                            if (enemies[j].Weapon.Damage - player.ArmorThresh > 0)
-                                                Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemies[j].Name, (enemies[j].Weapon.Amount * (enemies[j].Weapon.Damage - player.ArmorThresh)), player.Health);
+                                            prevHealth = enemies[eneIndex].Health;
+                                            player.Weapons[wepIndex].SpecialAttack(player, enemies[eneIndex]);
+                                            postHealth = enemies[eneIndex].Health;
+                                            if (postHealth < 0)
+                                                postHealth = 0;
+                                            totalhealth -= (prevHealth - postHealth);
+                                            if (enemies[eneIndex].Health <= 0)
+                                            {
+                                                enemies[eneIndex].Die();
+                                            }
                                             else
-                                                Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemies[j].Name, player.Health);
+                                            {
+                                                for (j = 0; j < amtEne; j++)
+                                                {
+                                                    if (enemies[j].IsDead == false)
+                                                    {
+                                                        enemies[j].Attack(player, enemies[j].Weapon.Damage, enemies[j].Weapon.Amount);
+                                                        if (enemies[j].Weapon.Damage - player.ArmorThresh > 0)
+                                                            Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemies[j].Name, (enemies[j].Weapon.Amount * (enemies[j].Weapon.Damage - player.ArmorThresh)), player.Health);
+                                                        else
+                                                            Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemies[j].Name, player.Health);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            for (j = 0; j < amtEne; j++)
+                                            {
+                                                if (enemies[j].IsDead == false)
+                                                {
+                                                    enemies[j].Attack(player, enemies[j].Weapon.Damage, enemies[j].Weapon.Amount);
+                                                    if (enemies[j].Weapon.Damage - player.ArmorThresh > 0)
+                                                        Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemies[j].Name, (enemies[j].Weapon.Amount * (enemies[j].Weapon.Damage - player.ArmorThresh)), player.Health);
+                                                    else
+                                                        Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemies[j].Name, player.Health);
+                                                }
+                                            }
+
+                                            prevHealth = enemies[eneIndex].Health;
+                                            player.Weapons[wepIndex].SpecialAttack(player, enemies[eneIndex]);
+                                            postHealth = enemies[eneIndex].Health;
+                                            if (postHealth < 0)
+                                                postHealth = 0;
+                                            totalhealth -= (prevHealth - postHealth);
+                                            if (enemies[eneIndex].Health <= 0)
+                                            {
+                                                enemies[eneIndex].Die();
+                                            }
                                         }
                                     }
-                                }
-                            }
-                            else
-                            {
-                                for (j = 0; j < amtEne; j++)
-                                {
-                                    if (enemies[j].IsDead == false)
+                                    else if (specialAttk == 2)
                                     {
-                                        enemies[j].Attack(player, enemies[j].Weapon.Damage, enemies[j].Weapon.Amount);
-                                        if (enemies[j].Weapon.Damage - player.ArmorThresh > 0)
-                                            Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemies[j].Name, (enemies[j].Weapon.Amount * (enemies[j].Weapon.Damage - player.ArmorThresh)), player.Health);
+                                        if (player.Weapons[wepIndex].Speed > enemies[eneIndex].Weapon.Speed)
+                                        {
+                                            prevHealth = enemies[eneIndex].Health;
+                                            player.Weapons[wepIndex].BasicAttack(player, enemies[eneIndex]);
+                                            postHealth = enemies[eneIndex].Health;
+                                            if (postHealth < 0)
+                                                postHealth = 0;
+                                            totalhealth -= (prevHealth - postHealth);
+                                            if (enemies[eneIndex].Health <= 0)
+                                            {
+                                                enemies[eneIndex].Die();
+                                            }
+                                            else
+                                            {
+                                                for (j = 0; j < amtEne; j++)
+                                                {
+                                                    if (enemies[j].IsDead == false)
+                                                    {
+                                                        enemies[j].Attack(player, enemies[j].Weapon.Damage, enemies[j].Weapon.Amount);
+                                                        if (enemies[j].Weapon.Damage - player.ArmorThresh > 0)
+                                                            Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemies[j].Name, (enemies[j].Weapon.Amount * (enemies[j].Weapon.Damage - player.ArmorThresh)), player.Health);
+                                                        else
+                                                            Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemies[j].Name, player.Health);
+                                                    }
+                                                }
+                                            }
+                                        }
                                         else
-                                            Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemies[j].Name, player.Health);
+                                        {
+                                            for (j = 0; j < amtEne; j++)
+                                            {
+                                                if (enemies[j].IsDead == false)
+                                                {
+                                                    enemies[j].Attack(player, enemies[j].Weapon.Damage, enemies[j].Weapon.Amount);
+                                                    if (enemies[j].Weapon.Damage - player.ArmorThresh > 0)
+                                                        Console.WriteLine("You are attacked by {0} for {1} damage you have {2} health remaining", enemies[j].Name, (enemies[j].Weapon.Amount * (enemies[j].Weapon.Damage - player.ArmorThresh)), player.Health);
+                                                    else
+                                                        Console.WriteLine("You are attacked by {0} for 1 damage you {1} health remaining", enemies[j].Name, player.Health);
+                                                }
+                                            }
+
+                                            prevHealth = enemies[eneIndex].Health;
+                                            player.Weapons[wepIndex].BasicAttack(player, enemies[eneIndex]);
+                                            postHealth = enemies[eneIndex].Health;
+                                            if (postHealth < 0)
+                                                postHealth = 0;
+                                            totalhealth -= (prevHealth - postHealth);
+                                            if (enemies[eneIndex].Health <= 0)
+                                            {
+                                                enemies[eneIndex].Die();
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Invalid option");
                                     }
                                 }
-
-                                prevHealth = enemies[eneIndex].Health;
-                                player.Weapons[wepIndex].BasicAttack(player, enemies[eneIndex]);
-                                postHealth = enemies[eneIndex].Health;
-                                if (postHealth < 0)
-                                    postHealth = 0;
-                                totalhealth -= (prevHealth - postHealth);
-                                if (enemies[eneIndex].Health <= 0)
-                                {
-                                    enemies[eneIndex].Die();
-                                }
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Invalid option");
                         }
                     }
                 }
             }
-            Console.WriteLine("You slew everything in the room YOUR AMAZING GAURDI... wrong game");
+            if(player.Health > 0)
+                Console.WriteLine("You slew everything in the room YOUR AMAZING GAURDI... wrong game");
         }
     }
 }

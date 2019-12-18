@@ -9,7 +9,7 @@ namespace TextBasedAdventure
     {
         public Animal()
         {
-            string[] line = File.ReadAllLines("C:\\Users\\patva\\source\\repos\\TextBasedAdventure\\Names\\AnimalNames.txt");
+            string[] line = File.ReadAllLines(@"../../../Names/AnimalNames.txt");
             int x = Globals.random.Next(0, line.Length);
             Health = Globals.random.Next(20, 25);
             ArmorThresh = 0;

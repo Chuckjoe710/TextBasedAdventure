@@ -85,17 +85,21 @@ namespace TextBasedAdventure
         public static Enemy GenerateEnemy()
         {
             int x = Globals.random.Next(1, 3);
-            if(x == 1)
+            if (x == 1)
             {
                 return new Humanoid();
             }
-            else if(x == 2)
+            else if (x == 2)
             {
                 return new Animal();
             }
-            else
+            else if (x == 3)
             {
                 return new Plant();
+            }
+            else
+            {
+                return new Humanoid();
             }
         }
     }

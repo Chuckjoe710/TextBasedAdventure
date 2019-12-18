@@ -9,7 +9,7 @@ namespace TextBasedAdventure
     {
         public Humanoid()
         {
-            string[] line = File.ReadAllLines("C:\\Users\\patva\\source\\repos\\TextBasedAdventure\\Names\\HumanoidNames.txt");
+            string[] line = File.ReadAllLines(@"../../../Names/HumanoidNames.txt");
             int x = Globals.random.Next(0, line.Length);
             Health = Globals.random.Next(20, 35);
             ArmorThresh = Globals.random.Next(3, 6);

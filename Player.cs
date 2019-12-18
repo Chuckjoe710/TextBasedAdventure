@@ -31,7 +31,7 @@ namespace TextBasedAdventure
         public int AmountWeapons
         {
             get { return _amtweps; }
-            private set { _amtweps = value; }
+            internal set { _amtweps = value; }
         }
         public bool IsStunned
         {
@@ -41,7 +41,7 @@ namespace TextBasedAdventure
         public Weapon[] Weapons
         {
             get { return _weapons; }
-            private set { _weapons = value; }
+            internal set { _weapons = value; }
         }
         #endregion
         #region constructor
@@ -64,13 +64,26 @@ namespace TextBasedAdventure
         {
             if(AmountWeapons == 5)
             {
+                string temp;
+                int x = 0;
                 Console.WriteLine("You must replace one of your weapons");
                 for(int k = 0; k < AmountWeapons; k++)
                 {
-                    Console.WriteLine("{0}. {1}", k+1, _weapons[k]);
+                    Console.WriteLine("{0}. {1}", k+1, _weapons[k].Name);
                 }
-                int x = Convert.ToInt32(Console.ReadLine());
-                if(x == 1)
+                while (x == 0)
+                {
+                    temp = Console.ReadLine();
+                    if(temp[0] >= '0' && temp[0] <= '9')
+                    {
+                        x = temp[0] - '0';
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Input");
+                    }
+                }
+                if (x == 1)
                 {
                     _weapons[0] = weapon;
                 }
@@ -94,7 +107,7 @@ namespace TextBasedAdventure
             else
             {
                 int x = AmountWeapons;
-                Weapons[x] = weapon;
+                _weapons[x] = weapon;
                 AmountWeapons++;
             }
         }
